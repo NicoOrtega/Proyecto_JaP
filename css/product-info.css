@@ -110,6 +110,7 @@ body{
   margin-bottom: 5px;
   padding: 5px;
   border-radius: 5px4;
+  margin-top: 120px; 
 }
 
 /* Establece un ancho para containerImages */
@@ -347,4 +348,30 @@ font-style: italic;
 #commusser { /*imagen de usuario, aparece junto al nombre de usuario en los comentarios. se indica que tiene de tamaño 50px y una distancia a la derecha de 5px*/
   width: 50px;
   padding-right: 5px;
+}
+
+@media (max-width: 1400px) {
+  #btnCart {
+    font-size: 0; /* Oculta el texto estableciendo el tamaño de fuente a 0 */
+    text-indent: -9999px; /* Mueve el texto fuera del área visible */
+  }
+  #units {
+    width: 100%;
+    box-sizing: border-box;
+    
+}
+
+  /* Establece un ancho y alto para la imagen del carrito de compras */
+  #btnCart {
+    content: ''; /* Agrega un contenido vacío */
+    background: url('../img/Logo-carrito.png'); /* Agrega una imagen de carrito de compras como fondo */
+    background-size: contain; /* Ajusta el tamaño de la imagen */
+    opacity: 0.5; /* Ajusta la opacidad de la imagen (0.7 significa 70%) */
+  
+    width: 70px; /* Ancho de la imagen */
+    height: 70px; /* Alto de la imagen */
+    display: inline-block;
+    background-position: center;
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+  }
 }

@@ -4,23 +4,23 @@ const URL_CATEGORIES = `https://japceibal.github.io/emercado-api/cats_products/$
 const searchInput = document.getElementById("searchInput");
 
 
-document.addEventListener("DOMContentLoaded", function(){
-
-            //Nombre de usuario y boton desconectar
-            let usuario = localStorage.getItem('nombre');
-            if (usuario=="" || usuario==null){
-                location.href='login.html';
-            }else{
-                document.getElementById('nombre').innerHTML += usuario;
-            }
-        
-            let logout = document.getElementById('salir');
-            logout.addEventListener('click', function(){
-                localStorage.removeItem('nombre');
-                alert('Desconexion exitosa', 'Vuelve pronto');
-                location.href="login.html";
-            })
-})
+document.addEventListener('DOMContentLoaded', function () {
+    //Nombre de usuario y boton desconectar
+    let usuario = localStorage.getItem('nombre');
+    if (usuario == '' || usuario == null) {
+      location.href = 'login.html';
+    } else {
+      document.getElementById('nombre').innerHTML += usuario;
+    }
+  
+    let logout = document.getElementById('salir');
+    logout.addEventListener('click', function () {
+      localStorage.removeItem('nombre');
+      localStorage.removeItem('email');
+      alert('Desconexion exitosa', 'Vuelve pronto');
+      location.href = 'login.html';
+    });
+  });
 
 
 
@@ -42,8 +42,6 @@ async function fetchProductData(url) {
 //Se llama a la funcion fetchProductData() con la URL. Cuando se resuelve la promesa muestra los datos con uploadProducts(), sino se crea un mensaje de error
 fetchProductData(URL_CATEGORIES)
     .then(data => {
-    
-        localStorage.setItem('backUp', JSON.stringify(data.products));
         uploadProducts(data.products);
     })
     .catch(error => {
@@ -57,7 +55,6 @@ fetchProductData(URL_CATEGORIES)
     //Toma un array de productos y crea un div a medida que itera por cada elemento, dentro coloca todas sus características   
     function uploadProducts(dataArray, searchTerm = "") {
         storeageOne = dataArray;
-        console.log(storeageOne);
         let productsList = document.getElementById("products-list");
         productsList.innerHTML = "";
 
@@ -71,15 +68,19 @@ fetchProductData(URL_CATEGORIES)
           productDiv.setAttribute("onclick", `setProdID(${item.id})`);
           //Acá se construyen todos los div que contienen cada producto
           productDiv.innerHTML = `
-              <img src="${item.image}">
-              <div class="description-container">
-                  <h2>${item.name}</h2>
-                  <p>${item.description}</p>
-                  <p class="price">${item.currency} ${item.cost}</p>
-              </div>
-              <div class="sold-count">
-                  <span>${item.soldCount} vendidos</span>
-              </div>
+            <div class="row">
+                <div class="col col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                    <img src="${item.image}">
+                </div>
+                <div class="col col-sm-6 col-md-6 col-lg-6 col-xl-6 description-container">
+                    <h2>${item.name}</h2>
+                    <p>${item.description}</p>
+                    <p class="price">${item.currency} ${item.cost}</p>
+                </div>
+                <div class="col sold-count">
+                    <span>${item.soldCount} vendidos</span>
+                </div>
+            </div>
           `;
 
           productsList.appendChild(productDiv);
@@ -166,7 +167,3 @@ function setProdID(id) {
     localStorage.setItem("prodID", id);
     window.location = "product-info.html";
 }
-
-
-
-
